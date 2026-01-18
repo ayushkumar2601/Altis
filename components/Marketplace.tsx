@@ -31,21 +31,21 @@ const Marketplace: React.FC<MarketplaceProps> = ({ bonds, balance, solBalance, o
       <header className="mb-12">
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
           <div>
-            <h1 className="text-5xl md:text-6xl font-black uppercase mb-3 tracking-tighter">
-              Primary <span className="text-orange-500 italic">Mint</span>
+            <h1 className="text-5xl md:text-6xl font-black uppercase mb-3 tracking-tighter" style={{ color: 'var(--text-primary)' }}>
+              Primary <span className="italic" style={{ color: 'var(--bg-accent-strong)' }}>Mint</span>
             </h1>
-            <p className="text-zinc-500 font-bold uppercase tracking-widest text-sm flex items-center gap-3">
+            <p className="font-bold uppercase tracking-widest text-sm flex items-center gap-3" style={{ color: 'var(--text-muted)' }}>
               <span className="flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
-                <span className="text-white">Devnet Live</span>
+                <span className="w-2 h-2 rounded-full animate-pulse" style={{ backgroundColor: 'var(--state-success)' }}></span>
+                <span style={{ color: 'var(--text-primary)' }}>Devnet Live</span>
               </span>
-              <span className="text-zinc-700">•</span>
+              <span style={{ color: 'var(--text-muted)' }}>•</span>
               <span>1 SOL ≈ ₹12,500</span>
             </p>
           </div>
-          <div className="bg-zinc-900/50 border border-white/5 rounded-2xl px-6 py-4">
-            <p className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 mb-1">Your Balance</p>
-            <p className="text-2xl font-black text-white">{solBalance.toFixed(4)} <span className="text-orange-500">SOL</span></p>
+          <div className="border rounded-2xl px-6 py-4" style={{ backgroundColor: 'var(--bg-card)', borderColor: 'var(--border-default)' }}>
+            <p className="text-[10px] font-bold uppercase tracking-widest mb-1" style={{ color: 'var(--text-muted)' }}>Your Balance</p>
+            <p className="text-2xl font-black" style={{ color: 'var(--text-primary)' }}>{solBalance.toFixed(4)} <span style={{ color: 'var(--bg-accent-strong)' }}>SOL</span></p>
           </div>
         </div>
       </header>
@@ -55,53 +55,62 @@ const Marketplace: React.FC<MarketplaceProps> = ({ bonds, balance, solBalance, o
         {bonds.map((bond) => (
           <div 
             key={bond.id} 
-            className="bg-zinc-900/30 border border-white/5 rounded-3xl p-8 hover:border-orange-500/30 transition-all group"
+            className="border rounded-3xl p-8 transition-all group hover:shadow-lg"
+            style={{ backgroundColor: 'var(--bg-card)', borderColor: 'var(--border-default)' }}
           >
             <div className="flex justify-between items-start mb-6">
               <div>
-                <h3 className="text-xl font-black uppercase tracking-tight mb-2">{bond.name}</h3>
+                <h3 className="text-xl font-black uppercase tracking-tight mb-2" style={{ color: 'var(--text-primary)' }}>{bond.name}</h3>
                 <div className="flex items-center gap-3">
-                  <span className="text-[10px] font-black uppercase tracking-widest text-zinc-500 bg-zinc-800 px-3 py-1 rounded-full">{bond.duration}</span>
-                  <span className="text-[10px] font-black uppercase tracking-widest text-zinc-500 bg-zinc-800 px-3 py-1 rounded-full">{bond.risk}</span>
+                  <span className="text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full" style={{ color: 'var(--text-muted)', backgroundColor: 'var(--bg-accent-soft)' }}>{bond.duration}</span>
+                  <span className="text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full" style={{ color: 'var(--text-muted)', backgroundColor: 'var(--bg-accent-soft)' }}>{bond.risk}</span>
                 </div>
               </div>
               <div className="text-right">
-                <p className="text-3xl font-black text-orange-500">{bond.apy}%</p>
-                <p className="text-[10px] font-bold uppercase tracking-widest text-zinc-500">Fixed APY</p>
+                <p className="text-3xl font-black" style={{ color: 'var(--bg-accent-strong)' }}>{bond.apy}%</p>
+                <p className="text-[10px] font-bold uppercase tracking-widest" style={{ color: 'var(--text-muted)' }}>Fixed APY</p>
               </div>
             </div>
 
-            <div className="grid grid-cols-3 gap-4 mb-6 py-4 border-y border-white/5">
+            <div className="grid grid-cols-3 gap-4 mb-6 py-4 border-y" style={{ borderColor: 'var(--border-default)' }}>
               <div>
-                <p className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 mb-1">Maturity</p>
-                <p className="text-sm font-bold text-white">{new Date(bond.maturityDate).toLocaleDateString('en-IN', { month: 'short', year: 'numeric' })}</p>
+                <p className="text-[10px] font-bold uppercase tracking-widest mb-1" style={{ color: 'var(--text-muted)' }}>Maturity</p>
+                <p className="text-sm font-bold" style={{ color: 'var(--text-primary)' }}>{new Date(bond.maturityDate).toLocaleDateString('en-IN', { month: 'short', year: 'numeric' })}</p>
               </div>
               <div>
-                <p className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 mb-1">Min. Investment</p>
-                <p className="text-sm font-bold text-white">₹{bond.pricePerUnit}</p>
+                <p className="text-[10px] font-bold uppercase tracking-widest mb-1" style={{ color: 'var(--text-muted)' }}>Min. Investment</p>
+                <p className="text-sm font-bold" style={{ color: 'var(--text-primary)' }}>₹{bond.pricePerUnit}</p>
               </div>
               <div>
-                <p className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 mb-1">Available</p>
-                <p className="text-sm font-bold text-green-500">{((bond.remainingSupply / bond.totalSupply) * 100).toFixed(0)}%</p>
+                <p className="text-[10px] font-bold uppercase tracking-widest mb-1" style={{ color: 'var(--text-muted)' }}>Available</p>
+                <p className="text-sm font-bold" style={{ color: 'var(--state-success)' }}>{((bond.remainingSupply / bond.totalSupply) * 100).toFixed(0)}%</p>
               </div>
             </div>
 
             {/* Supply Bar */}
             <div className="mb-6">
-              <div className="h-2 bg-zinc-800 rounded-full overflow-hidden">
+              <div className="h-2 rounded-full overflow-hidden" style={{ backgroundColor: 'var(--bg-accent-soft)' }}>
                 <div 
-                  className="h-full bg-gradient-to-r from-orange-500 to-orange-400 rounded-full transition-all"
-                  style={{ width: `${((bond.totalSupply - bond.remainingSupply) / bond.totalSupply) * 100}%` }}
+                  className="h-full rounded-full transition-all"
+                  style={{ 
+                    width: `${((bond.totalSupply - bond.remainingSupply) / bond.totalSupply) * 100}%`,
+                    background: 'linear-gradient(to right, var(--bg-accent-strong), var(--bg-accent-strong))'
+                  }}
                 ></div>
               </div>
-              <p className="text-[10px] font-bold uppercase tracking-widest text-zinc-600 mt-2">
+              <p className="text-[10px] font-bold uppercase tracking-widest mt-2" style={{ color: 'var(--text-muted)' }}>
                 {((bond.totalSupply - bond.remainingSupply) / 1000000).toFixed(1)}M / {(bond.totalSupply / 1000000).toFixed(0)}M Minted
               </p>
             </div>
 
             <button 
               onClick={() => setSelectedBond(bond)}
-              className="w-full bg-orange-500 text-black py-4 rounded-full font-black uppercase tracking-widest text-sm hover:bg-orange-400 transition-all active:scale-[0.98] shadow-lg shadow-orange-500/20"
+              className="w-full py-4 rounded-full font-black uppercase tracking-widest text-sm transition-all active:scale-[0.98]"
+              style={{ 
+                backgroundColor: 'var(--bg-accent-strong)', 
+                color: 'var(--text-primary)',
+                boxShadow: '0 8px 16px rgba(var(--color-1-rgb), 0.2)'
+              }}
             >
               Mint Bond NFT
             </button>
@@ -111,63 +120,69 @@ const Marketplace: React.FC<MarketplaceProps> = ({ bonds, balance, solBalance, o
 
       {/* Minting Overlay */}
       {isMinting && (
-        <div className="fixed inset-0 z-[200] flex flex-col items-center justify-center bg-black/95 backdrop-blur-xl">
+        <div className="fixed inset-0 z-[200] flex flex-col items-center justify-center backdrop-blur-xl" style={{ backgroundColor: 'rgba(var(--color-3-rgb), 0.95)' }}>
           <div className="relative">
-            <div className="w-24 h-24 border-4 border-orange-500/20 rounded-full"></div>
-            <div className="absolute inset-0 w-24 h-24 border-4 border-transparent border-t-orange-500 rounded-full animate-spin"></div>
+            <div className="w-24 h-24 border-4 rounded-full" style={{ borderColor: 'rgba(var(--color-1-rgb), 0.2)' }}></div>
+            <div className="absolute inset-0 w-24 h-24 border-4 border-transparent rounded-full animate-spin" style={{ borderTopColor: 'var(--bg-accent-strong)' }}></div>
           </div>
-          <h2 className="text-3xl font-black uppercase tracking-tighter mt-8 mb-2">Minting Your Bond...</h2>
-          <p className="text-zinc-500 font-bold uppercase tracking-widest text-sm">Confirm transaction in Phantom</p>
-          <div className="flex items-center gap-2 mt-6 text-zinc-600">
-            <div className="w-2 h-2 rounded-full bg-orange-500 animate-pulse"></div>
-            <span className="text-xs font-bold uppercase tracking-widest">Awaiting signature</span>
+          <h2 className="text-3xl font-black uppercase tracking-tighter mt-8 mb-2" style={{ color: 'var(--text-primary)' }}>Minting Your Bond...</h2>
+          <p className="font-bold uppercase tracking-widest text-sm" style={{ color: 'var(--text-muted)' }}>Confirm transaction in Phantom</p>
+          <div className="flex items-center gap-2 mt-6">
+            <div className="w-2 h-2 rounded-full animate-pulse" style={{ backgroundColor: 'var(--bg-accent-strong)' }}></div>
+            <span className="text-xs font-bold uppercase tracking-widest" style={{ color: 'var(--text-muted)' }}>Awaiting signature</span>
           </div>
         </div>
       )}
 
       {/* Buy Modal */}
       {selectedBond && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/95 backdrop-blur-xl">
-          <div className="bg-zinc-900 border border-white/10 rounded-3xl max-w-lg w-full relative overflow-hidden">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 backdrop-blur-xl" style={{ backgroundColor: 'rgba(var(--color-3-rgb), 0.95)' }}>
+          <div className="border rounded-3xl max-w-lg w-full relative overflow-hidden" style={{ backgroundColor: 'var(--bg-card)', borderColor: 'var(--border-default)' }}>
             {/* Modal Header */}
-            <div className="p-6 border-b border-white/5">
+            <div className="p-6 border-b" style={{ borderColor: 'var(--border-default)' }}>
               <button 
                 onClick={() => setSelectedBond(null)} 
-                className="absolute top-6 right-6 w-10 h-10 rounded-full bg-white/5 hover:bg-white/10 flex items-center justify-center transition-all"
+                className="absolute top-6 right-6 w-10 h-10 rounded-full flex items-center justify-center transition-all"
+                style={{ backgroundColor: 'var(--bg-accent-soft)' }}
               >
-                <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" style={{ color: 'var(--text-primary)' }}>
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                 </svg>
               </button>
               <div className="flex items-center gap-3 mb-2">
-                <div className="w-3 h-3 rounded-full bg-orange-500"></div>
-                <span className="text-[10px] font-black uppercase tracking-widest text-zinc-500">Mint Bond NFT</span>
+                <div className="w-3 h-3 rounded-full" style={{ backgroundColor: 'var(--bg-accent-strong)' }}></div>
+                <span className="text-[10px] font-black uppercase tracking-widest" style={{ color: 'var(--text-muted)' }}>Mint Bond NFT</span>
               </div>
-              <h2 className="text-2xl font-black uppercase tracking-tight pr-12">{selectedBond.name}</h2>
+              <h2 className="text-2xl font-black uppercase tracking-tight pr-12" style={{ color: 'var(--text-primary)' }}>{selectedBond.name}</h2>
             </div>
 
             {/* Modal Body */}
             <div className="p-6 space-y-6">
               {/* APY Highlight */}
-              <div className="bg-orange-500/10 border border-orange-500/20 rounded-2xl p-4 flex items-center justify-between">
-                <span className="text-sm font-bold text-orange-500 uppercase tracking-widest">Fixed APY</span>
-                <span className="text-3xl font-black text-orange-500">{selectedBond.apy}%</span>
+              <div className="border rounded-2xl p-4 flex items-center justify-between" style={{ backgroundColor: 'var(--bg-accent-soft)', borderColor: 'rgba(var(--color-1-rgb), 0.3)' }}>
+                <span className="text-sm font-bold uppercase tracking-widest" style={{ color: 'var(--text-primary)' }}>Fixed APY</span>
+                <span className="text-3xl font-black" style={{ color: 'var(--bg-accent-strong)' }}>{selectedBond.apy}%</span>
               </div>
 
               {/* Amount Input */}
               <div>
                 <div className="flex justify-between mb-2">
-                  <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500">Investment Amount (₹)</label>
-                  <span className="text-[10px] font-black uppercase text-zinc-600">Min: ₹100</span>
+                  <label className="text-[10px] font-black uppercase tracking-widest" style={{ color: 'var(--text-muted)' }}>Investment Amount (₹)</label>
+                  <span className="text-[10px] font-black uppercase" style={{ color: 'var(--text-muted)' }}>Min: ₹100</span>
                 </div>
                 <div className="relative">
-                  <span className="absolute left-5 top-1/2 -translate-y-1/2 text-2xl font-black text-zinc-600">₹</span>
+                  <span className="absolute left-5 top-1/2 -translate-y-1/2 text-2xl font-black" style={{ color: 'var(--text-muted)' }}>₹</span>
                   <input 
                     type="number" 
                     value={buyAmountInr}
                     onChange={(e) => setBuyAmountInr(e.target.value)}
                     placeholder="100"
-                    className="w-full bg-black border border-white/10 rounded-2xl pl-12 pr-6 py-5 text-3xl font-black focus:outline-none focus:border-orange-500 text-white placeholder:text-zinc-700"
+                    className="w-full border rounded-2xl pl-12 pr-6 py-5 text-3xl font-black focus:outline-none"
+                    style={{ 
+                      backgroundColor: 'var(--bg-page)', 
+                      borderColor: 'var(--border-default)',
+                      color: 'var(--text-primary)'
+                    }}
                   />
                 </div>
               </div>
@@ -178,7 +193,8 @@ const Marketplace: React.FC<MarketplaceProps> = ({ bonds, balance, solBalance, o
                   <button
                     key={amt}
                     onClick={() => setBuyAmountInr(String(amt))}
-                    className="flex-1 py-3 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-sm font-bold text-white transition-all"
+                    className="flex-1 py-3 rounded-xl text-sm font-bold transition-all"
+                    style={{ backgroundColor: 'var(--bg-accent-soft)', color: 'var(--text-primary)' }}
                   >
                     ₹{amt.toLocaleString()}
                   </button>
@@ -186,22 +202,22 @@ const Marketplace: React.FC<MarketplaceProps> = ({ bonds, balance, solBalance, o
               </div>
 
               {/* Summary */}
-              <div className="bg-black/50 rounded-2xl p-5 space-y-4 border border-white/5">
+              <div className="rounded-2xl p-5 space-y-4 border" style={{ backgroundColor: 'var(--bg-page)', borderColor: 'var(--border-default)' }}>
                 <div className="flex justify-between items-center">
-                  <span className="text-[10px] font-black uppercase tracking-widest text-zinc-500">You Pay</span>
-                  <span className={`text-xl font-black ${insufficientFunds ? 'text-red-500' : 'text-white'}`}>
+                  <span className="text-[10px] font-black uppercase tracking-widest" style={{ color: 'var(--text-muted)' }}>You Pay</span>
+                  <span className={`text-xl font-black`} style={{ color: insufficientFunds ? 'var(--state-error)' : 'var(--text-primary)' }}>
                     {solRequired.toFixed(4)} SOL
                   </span>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span className="text-[10px] font-black uppercase tracking-widest text-zinc-500">You Receive</span>
-                  <span className="text-xl font-black text-orange-500">
+                  <span className="text-[10px] font-black uppercase tracking-widest" style={{ color: 'var(--text-muted)' }}>You Receive</span>
+                  <span className="text-xl font-black" style={{ color: 'var(--bg-accent-strong)' }}>
                     {(Number(buyAmountInr) / selectedBond.pricePerUnit).toFixed(2)} Units
                   </span>
                 </div>
-                <div className="flex justify-between items-center pt-4 border-t border-white/5">
-                  <span className="text-[10px] font-black uppercase tracking-widest text-zinc-500">Wallet Balance</span>
-                  <span className="text-sm font-bold text-zinc-400">{solBalance.toFixed(4)} SOL</span>
+                <div className="flex justify-between items-center pt-4 border-t" style={{ borderColor: 'var(--border-default)' }}>
+                  <span className="text-[10px] font-black uppercase tracking-widest" style={{ color: 'var(--text-muted)' }}>Wallet Balance</span>
+                  <span className="text-sm font-bold" style={{ color: 'var(--text-secondary)' }}>{solBalance.toFixed(4)} SOL</span>
                 </div>
               </div>
 
@@ -209,12 +225,17 @@ const Marketplace: React.FC<MarketplaceProps> = ({ bonds, balance, solBalance, o
               <button 
                 onClick={handleConfirm}
                 disabled={!buyAmountInr || insufficientFunds || Number(buyAmountInr) < 100}
-                className="w-full bg-orange-500 text-black py-5 rounded-full font-black uppercase tracking-widest text-lg hover:bg-orange-400 transition-all disabled:opacity-30 disabled:cursor-not-allowed active:scale-[0.98] shadow-xl shadow-orange-500/20"
+                className="w-full py-5 rounded-full font-black uppercase tracking-widest text-lg transition-all disabled:opacity-30 disabled:cursor-not-allowed active:scale-[0.98]"
+                style={{ 
+                  backgroundColor: 'var(--bg-accent-strong)', 
+                  color: 'var(--text-primary)',
+                  boxShadow: '0 20px 40px rgba(var(--color-1-rgb), 0.2)'
+                }}
               >
                 {insufficientFunds ? 'Insufficient SOL Balance' : 'Confirm & Mint'}
               </button>
 
-              <p className="text-center text-[10px] font-bold uppercase tracking-widest text-zinc-600">
+              <p className="text-center text-[10px] font-bold uppercase tracking-widest" style={{ color: 'var(--text-muted)' }}>
                 Transaction will be processed on Solana Devnet
               </p>
             </div>

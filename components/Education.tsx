@@ -32,7 +32,7 @@ const Education: React.FC<EducationProps> = ({ marketBonds, onNavigate }) => {
           <div className="text-orange-500 font-black text-6xl opacity-20">01</div>
           <h2 className="text-4xl font-black uppercase tracking-tighter">What are G-Secs?</h2>
           <p className="text-zinc-400 leading-relaxed text-lg">
-            Government Securities (G-Secs) are tradable instruments issued by the Central Government or State Governments. They acknowledge the Government's debt obligation. At <span className="text-white">bondbuy</span>, we use Solana to make these institution-only assets available for just <span className="text-orange-500 font-black">₹100</span>.
+            Government Securities (G-Secs) are tradable instruments issued by the Central Government or State Governments. They acknowledge the Government's debt obligation. At <span className="text-white">Altis</span>, we use Solana to make these institution-only assets available for just <span className="text-orange-500 font-black">₹100</span>.
           </p>
           <div className="bg-zinc-900/40 border border-white/5 rounded-2xl p-6 space-y-3">
             <h3 className="text-sm font-black uppercase tracking-widest text-orange-500">Key Features</h3>
@@ -157,7 +157,7 @@ const Education: React.FC<EducationProps> = ({ marketBonds, onNavigate }) => {
       <section className="mb-32">
         <h2 className="text-4xl font-black uppercase tracking-tighter mb-12 text-center italic">Institutional Comparison</h2>
         <div className="grid grid-cols-4 border border-white/10 rounded-3xl overflow-hidden bg-zinc-900/20">
-          {['Metric', 'Bank FD', 'Retail G-Sec', 'bondbuy'].map((h, i) => (
+          {['Metric', 'Bank FD', 'Retail G-Sec', 'Altis'].map((h, i) => (
             <div key={i} className="bg-zinc-900/50 p-6 text-[10px] font-black uppercase tracking-widest text-zinc-500 border-r border-white/10 last:border-0">{h}</div>
           ))}
           
@@ -327,8 +327,8 @@ const Education: React.FC<EducationProps> = ({ marketBonds, onNavigate }) => {
           {[
             {
               id: 'faq1',
-              question: 'How is bondbuy different from traditional bond platforms?',
-              answer: 'bondbuy leverages blockchain technology to enable fractional ownership starting at just ₹100, compared to ₹10,000 minimums on traditional platforms. We offer instant settlement, transparent on-chain records, and 24/7 accessibility without intermediaries.'
+              question: 'How is Altis different from traditional bond platforms?',
+              answer: 'Altis leverages blockchain technology to enable fractional ownership starting at just ₹100, compared to ₹10,000 minimums on traditional platforms. We offer instant settlement, transparent on-chain records, and 24/7 accessibility without intermediaries.'
             },
             {
               id: 'faq2',
@@ -348,7 +348,7 @@ const Education: React.FC<EducationProps> = ({ marketBonds, onNavigate }) => {
             {
               id: 'faq5',
               question: 'Is my investment protected by the government?',
-              answer: 'Real government securities are backed by the sovereign guarantee of the Government of India. However, bondbuy is currently a demo platform on Solana Devnet and does not involve actual government securities or real money.'
+              answer: 'Real government securities are backed by the sovereign guarantee of the Government of India. However, Altis is currently a demo platform on Solana Devnet and does not involve actual government securities or real money.'
             },
             {
               id: 'faq6',
@@ -413,7 +413,7 @@ const Education: React.FC<EducationProps> = ({ marketBonds, onNavigate }) => {
               <div className="bg-zinc-900/50 border border-white/5 rounded-2xl p-8 pt-12 h-full">
                 <h3 className="text-xl font-black uppercase mb-4">Connect Wallet</h3>
                 <p className="text-zinc-400 text-sm leading-relaxed">
-                  Click "Connect Wallet" on bondbuy and approve the connection request in your Phantom extension popup.
+                  Click "Connect Wallet" on Altis and approve the connection request in your Phantom extension popup.
                 </p>
               </div>
             </div>

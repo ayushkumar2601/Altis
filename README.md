@@ -1,6 +1,6 @@
 <div align="center">
 
-# bondbuy
+# Altis
 
 ### Fractional Government Bonds on Solana (Devnet)
 
@@ -19,7 +19,7 @@
 
 ## ✨ Overview
 
-**bondbuy** is a Solana-based Web3 application where users can invest in **fractional government bonds**.
+**Altis** is a Solana-based Web3 application where users can invest in **fractional government bonds**.
 Each bond purchase is executed as a **real on-chain transaction** and results in an **NFT minted to the
 user’s Phantom wallet**, representing ownership of the bond fraction.
 
@@ -46,7 +46,7 @@ user’s Phantom wallet**, representing ownership of the bond fraction.
 
 ---
 
-## 🧠 How bondbuy Works
+## 🧠 How Altis Works
 
 <div align="center">
 

@@ -1,7 +1,7 @@
 
 {
-  "name": "bondbuy",
-  "description": "A high-impact, Web3 fintech landing page for tokenized government bonds, featuring Solana Devnet NFT minting and Phantom Wallet integration.",
+  "name": "altis",
+  "description": "Altis is a Web3 platform enabling fractional investment in government bonds with instant settlement, on-chain transparency, and institutional-grade infrastructure.",
   "requestFramePermissions": [
     "camera"
   ]

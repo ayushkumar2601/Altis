@@ -4,10 +4,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>bondbuy | Tokenized Government Bonds</title>
+    <meta name="description" content="Altis is a Web3 platform enabling fractional investment in government bonds with instant settlement and on-chain transparency.">
+    <title>Altis — Fractional Government Bonds</title>
     <link rel="icon" type="image/png" href="/logobond-removebg-preview.png">
     <link rel="apple-touch-icon" href="/logobond-removebg-preview.png">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              'altis-lime': '#c7f70a',
+              'altis-lime-soft': '#e6ff9a',
+              'altis-mint': '#eef9f3',
+              'altis-text': '#0a0a0a',
+              'altis-text-secondary': '#2b2b2b',
+              'altis-muted': '#6b7280',
+              'altis-border': '#d1d5db',
+              'altis-success': '#16a34a',
+              'altis-warning': '#facc15',
+              'altis-info': '#2563eb',
+              'altis-error': '#dc2626',
+            }
+          }
+        }
+      }
+    </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/buffer/6.0.3/buffer.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,24 +38,83 @@
       window.Buffer = window.Buffer || buffer.Buffer;
     </script>
     <style>
+        /* ======================================================
+           ALTIS – GLOBAL COLOR VARIABLES
+           Scope: Frontend UI only (no logic changes)
+           ====================================================== */
+        :root {
+            /* Brand Accents */
+            --color-1: #c7f70a;
+            --color-1-rgb: 199, 247, 10;
+            --color-2: #e6ff9a;
+            --color-2-rgb: 230, 255, 154;
+            
+            /* Backgrounds */
+            --color-3: #eef9f3;
+            --color-3-rgb: 238, 249, 243;
+            --color-4: #ffffff;
+            --color-4-rgb: 255, 255, 255;
+            
+            /* Text Colors */
+            --color-5: #0a0a0a;
+            --color-5-rgb: 10, 10, 10;
+            --color-6: #2b2b2b;
+            --color-6-rgb: 43, 43, 43;
+            --color-7: #6b7280;
+            --color-7-rgb: 107, 114, 128;
+            
+            /* Borders */
+            --color-8: #d1d5db;
+            --color-8-rgb: 209, 213, 219;
+            
+            /* Semantic States */
+            --color-9: #16a34a;
+            --color-9-rgb: 22, 163, 74;
+            --color-10: #facc15;
+            --color-10-rgb: 250, 204, 21;
+            --color-11: #2563eb;
+            --color-11-rgb: 37, 99, 235;
+            --color-12: #dc2626;
+            --color-12-rgb: 220, 38, 38;
+            
+            /* Semantic Aliases */
+            --bg-page: var(--color-3);
+            --bg-card: var(--color-4);
+            --bg-accent-soft: var(--color-2);
+            --bg-accent-strong: var(--color-1);
+            --text-primary: var(--color-5);
+            --text-secondary: var(--color-6);
+            --text-muted: var(--color-7);
+            --text-inverse: var(--color-4);
+            --border-default: rgba(var(--color-5-rgb), 0.08);
+            --state-success: var(--color-9);
+            --state-warning: var(--color-10);
+            --state-info: var(--color-11);
+            --state-error: var(--color-12);
+        }
+        
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #000;
-            color: #fff;
+            background-color: var(--bg-page);
+            color: var(--text-primary);
             overflow-x: hidden;
         }
+        
         .text-huge {
             font-size: clamp(3rem, 10vw, 8rem);
             line-height: 0.9;
             letter-spacing: -0.04em;
         }
+        
         .accent-glow {
-            text-shadow: 0 0 30px rgba(249, 115, 22, 0.4);
+            text-shadow: 0 0 30px rgba(var(--color-1-rgb), 0.4);
         }
+        
         @keyframes slideUp {
           from { transform: translateY(20px); opacity: 0; }
           to { transform: translateY(0); opacity: 1; }
         }
+        
         .animate-slide-up {
           animation: slideUp 0.5s ease-out forwards;
         }

@@ -10,14 +10,14 @@ const InfoStrip: React.FC = () => {
   ];
 
   return (
-    <section className="bg-zinc-900 border-y border-white/5 py-12 px-6">
+    <section className="border-y py-12 px-6" style={{ backgroundColor: 'var(--bg-card)', borderColor: 'var(--border-default)' }}>
       <div className="max-w-[1400px] mx-auto grid grid-cols-2 lg:grid-cols-4 gap-8">
         {stats.map((stat, idx) => (
           <div key={idx} className="flex flex-col gap-2 group cursor-default">
-            <span className="text-orange-500 font-bold uppercase tracking-widest text-xs">
+            <span className="font-bold uppercase tracking-widest text-xs" style={{ color: 'var(--bg-accent-strong)' }}>
               {stat.label}
             </span>
-            <span className="text-white text-2xl lg:text-3xl font-black uppercase tracking-tight group-hover:text-orange-500 transition-colors">
+            <span className="text-2xl lg:text-3xl font-black uppercase tracking-tight transition-colors group-hover:opacity-70" style={{ color: 'var(--text-primary)' }}>
               {stat.value}
             </span>
           </div>

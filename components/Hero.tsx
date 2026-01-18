@@ -15,14 +15,16 @@ const Hero: React.FC<HeroProps> = ({ onConnect, isConnected }) => {
         {/* Left Side: Copy */}
         <div className="flex-1 text-left z-10 animate-slide-up">
           <h1 className="text-huge font-black uppercase mb-8">
-            <span className="accent-glow text-orange-500">OWN INDIAN</span> <br />
-            <span className="text-white italic">GOVT BONDS.</span> <br />
-            <span className="text-green-500">START WITH </span> <span className="text-yellow-400" style={{ textShadow: '0 0 8px #ffd700, 0 0 16px #ffd700' }}>₹100</span> <span className="text-orange-500">.</span>
+            <span className="accent-glow" style={{ color: 'var(--bg-accent-strong)' }}>ELEVATE YOUR</span> <br />
+            <span className="italic" style={{ color: 'var(--text-primary)' }}>PORTFOLIO.</span> <br />
+            <span style={{ color: 'var(--state-success)' }}>FROM JUST </span> 
+            <span style={{ color: 'var(--state-warning)', textShadow: '0 0 8px rgba(var(--color-10-rgb), 0.6), 0 0 16px rgba(var(--color-10-rgb), 0.4)' }}>₹100</span> 
+            <span style={{ color: 'var(--bg-accent-strong)' }}>.</span>
           </h1>
           
-          <p className="max-w-xl text-zinc-400 text-xl md:text-2xl font-medium leading-relaxed mb-10">
-            Invest in fractional G-Secs and SDLs using Solana Devnet SOL. <br />
-            Built for the <span className="text-white">next generation</span> of Indian retail investors.
+          <p className="max-w-xl text-xl md:text-2xl font-medium leading-relaxed mb-10" style={{ color: 'var(--text-secondary)' }}>
+            Invest in fractional government bonds using Solana. <br />
+            Sovereign-backed security meets <span style={{ color: 'var(--text-primary)' }}>institutional-grade</span> blockchain infrastructure.
           </p>
 
           <div className="flex flex-wrap gap-4">
@@ -31,12 +33,24 @@ const Hero: React.FC<HeroProps> = ({ onConnect, isConnected }) => {
                 e.preventDefault();
                 onConnect();
               }}
-              className="bg-orange-500 text-black px-12 py-5 rounded-full font-black uppercase tracking-widest text-lg hover:bg-orange-400 transition-all shadow-xl shadow-orange-500/20 active:scale-95"
+              className="px-12 py-5 rounded-full font-black uppercase tracking-widest text-lg transition-all active:scale-95"
+              style={{ 
+                backgroundColor: 'var(--bg-accent-strong)', 
+                color: 'var(--text-primary)',
+                boxShadow: '0 20px 40px rgba(var(--color-1-rgb), 0.2)'
+              }}
             >
               {isConnected ? 'Market Ready' : 'Connect Extension'}
             </button>
-            <button className="bg-transparent border-2 border-white/20 text-white px-10 py-5 rounded-full font-black uppercase tracking-widest text-lg hover:bg-white/10 transition-all active:scale-95">
-              Browse G-Secs
+            <button 
+              className="px-10 py-5 rounded-full font-black uppercase tracking-widest text-lg transition-all active:scale-95 border-2"
+              style={{ 
+                backgroundColor: 'transparent', 
+                borderColor: 'var(--border-default)', 
+                color: 'var(--text-primary)' 
+              }}
+            >
+              Explore Bonds
             </button>
           </div>
         </div>

@@ -66,11 +66,11 @@ const YieldPage: React.FC<YieldProps> = ({ portfolio, balance, tick }) => {
   return (
     <div className="pt-32 pb-20 px-6 lg:px-12 max-w-[1400px] mx-auto animate-in fade-in duration-700">
       <header className="mb-16">
-        <h1 className="text-huge font-black uppercase mb-4 tracking-tighter">
-          ₹ YIELD <span className="text-orange-500 italic">REPORT.</span>
+        <h1 className="text-huge font-black uppercase mb-4 tracking-tighter" style={{ color: 'var(--text-primary)' }}>
+          ₹ YIELD <span className="italic" style={{ color: 'var(--bg-accent-strong)' }}>REPORT.</span>
         </h1>
-        <p className="text-zinc-500 font-bold uppercase tracking-widest text-sm">
-          Daily accrual metrics for your <span className="text-white">BondBuy ₹ Wallet</span>.
+        <p className="font-bold uppercase tracking-widest text-sm" style={{ color: 'var(--text-muted)' }}>
+          Daily accrual metrics for your <span style={{ color: 'var(--text-primary)' }}>Altis Portfolio</span>.
         </p>
       </header>
 
