@@ -16,11 +16,13 @@ const Navbar: React.FC<NavbarProps> = ({ onConnect, isConnected, address, onNavi
         { label: 'Market', id: 'market' },
         { label: 'Portfolio', id: 'portfolio' },
         { label: 'Yield', id: 'yield' },
+        { label: 'AI Advisor', id: 'ai-advisor' },
         { label: 'Education', id: 'education' }
       ]
     : [
         { label: 'Home', id: 'landing' },
         { label: 'Market', id: 'market' },
+        { label: 'AI Advisor', id: 'ai-advisor' },
         { label: 'Education', id: 'education' }
       ];
 

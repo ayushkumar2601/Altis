@@ -11,6 +11,7 @@ import Education from './components/Education';
 import Footer from './components/Footer';
 import MintSuccessModal from './components/MintSuccessModal';
 import ExecutionReceipt from './components/ExecutionReceipt';
+import AIRecommendations from './components/AIRecommendations';
 import { saveHolding, fetchHoldings, HoldingRecord } from './lib/supabase';
 
 // --- Types & Constants ---
@@ -38,7 +39,7 @@ export interface Holding {
   txHash: string;
 }
 
-export type View = 'dashboard' | 'market' | 'portfolio' | 'yield' | 'education' | 'landing' | 'receipt';
+export type View = 'dashboard' | 'market' | 'portfolio' | 'yield' | 'education' | 'landing' | 'receipt' | 'ai-advisor';
 
 const INDIAN_BONDS: Bond[] = [
   { id: 'in-gs-2030', name: 'India G-Sec 2030 (7.18%)', apy: 7.18, maturityDate: '2030-01-15', pricePerUnit: 100, risk: 'Sovereign', duration: '6 Years', totalSupply: 10000000, remainingSupply: 8400000 },
@@ -413,7 +414,7 @@ const App: React.FC = () => {
   };
 
   const renderContent = () => {
-    if (!walletConnected && !['education', 'landing', 'market'].includes(currentView)) {
+    if (!walletConnected && !['education', 'landing', 'market', 'ai-advisor'].includes(currentView)) {
       return <LandingPage onConnect={handleWalletClick} isConnected={false} />;
     }
 
@@ -423,6 +424,7 @@ const App: React.FC = () => {
       case 'portfolio': return <Portfolio portfolio={portfolio} tick={tick} />;
       case 'yield': return <YieldPage portfolio={portfolio} balance={solBalance * SOL_TO_INR_DEMO_RATE} tick={tick} />;
       case 'education': return <Education marketBonds={marketBonds} onNavigate={setCurrentView} />;
+      case 'ai-advisor': return <AIRecommendations availableBonds={marketBonds} currentPortfolio={portfolio} onBondSelect={(bondId) => setCurrentView('market')} />;
       case 'landing': return <LandingPage onConnect={handleWalletClick} isConnected={walletConnected} />;
       case 'receipt': return currentReceiptId ? <ExecutionReceipt receiptId={currentReceiptId} onBack={() => setCurrentView('portfolio')} /> : <LandingPage onConnect={handleWalletClick} isConnected={walletConnected} />;
       default: return <LandingPage onConnect={handleWalletClick} isConnected={walletConnected} />;
