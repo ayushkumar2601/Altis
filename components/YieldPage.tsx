@@ -76,12 +76,12 @@ const YieldPage: React.FC<YieldProps> = ({ portfolio, balance, tick }) => {
 
       <div className="grid lg:grid-cols-3 gap-12 mb-20">
         {/* Main Chart Section */}
-        <div className="lg:col-span-2 bg-zinc-900/30 border border-white/5 p-8 lg:p-12 rounded-[3.5rem] relative overflow-hidden">
-          <div className="absolute top-0 right-0 p-10 font-black text-8xl text-white/5 pointer-events-none italic uppercase">INR</div>
+        <div className="lg:col-span-2 border p-8 lg:p-12 rounded-[3.5rem] relative overflow-hidden" style={{ backgroundColor: 'var(--bg-card)', borderColor: 'var(--border-default)' }}>
+          <div className="absolute top-0 right-0 p-10 font-black text-8xl pointer-events-none italic uppercase" style={{ color: 'rgba(var(--color-7-rgb), 0.05)' }}>INR</div>
           
           {/* Chart Header with Controls */}
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6 mb-8">
-            <h2 className="text-2xl font-black uppercase tracking-tight">Return Projection</h2>
+            <h2 className="text-2xl font-black uppercase tracking-tight" style={{ color: 'var(--text-primary)' }}>Return Projection</h2>
             
             {/* APY Selector */}
             <div className="flex flex-wrap gap-2">
@@ -89,11 +89,11 @@ const YieldPage: React.FC<YieldProps> = ({ portfolio, balance, tick }) => {
                 <button
                   key={option.apy}
                   onClick={() => setSelectedApy(option.apy)}
-                  className={`px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider transition-all ${
-                    selectedApy === option.apy
-                      ? 'bg-orange-500 text-black'
-                      : 'bg-zinc-800 text-zinc-400 hover:bg-zinc-700'
-                  }`}
+                  className="px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider transition-all"
+                  style={selectedApy === option.apy
+                    ? { backgroundColor: '#C7F70A', color: 'var(--text-primary)' }
+                    : { backgroundColor: 'var(--bg-accent-soft)', color: 'var(--text-muted)' }
+                  }
                 >
                   {option.apy}%
                 </button>
@@ -103,7 +103,7 @@ const YieldPage: React.FC<YieldProps> = ({ portfolio, balance, tick }) => {
 
           {/* Investment Amount Input */}
           <div className="mb-8">
-            <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500 mb-3 block">
+            <label className="text-[10px] font-black uppercase tracking-widest mb-3 block" style={{ color: 'var(--text-muted)' }}>
               Simulation Amount (₹)
             </label>
             <div className="flex flex-wrap gap-2 mb-4">
@@ -111,30 +111,34 @@ const YieldPage: React.FC<YieldProps> = ({ portfolio, balance, tick }) => {
                 <button
                   key={amount}
                   onClick={() => setInvestmentAmount(amount)}
-                  className={`px-4 py-2 rounded-xl text-sm font-bold transition-all ${
-                    investmentAmount === amount
-                      ? 'bg-orange-500 text-black'
-                      : 'bg-zinc-800 text-zinc-400 hover:bg-zinc-700'
-                  }`}
+                  className="px-4 py-2 rounded-xl text-sm font-bold transition-all"
+                  style={investmentAmount === amount
+                    ? { backgroundColor: '#C7F70A', color: 'var(--text-primary)' }
+                    : { backgroundColor: 'var(--bg-accent-soft)', color: 'var(--text-muted)' }
+                  }
                 >
                   ₹{amount.toLocaleString('en-IN')}
                 </button>
               ))}
             </div>
             <div className="relative">
-              <span className="absolute left-4 top-1/2 -translate-y-1/2 text-xl font-black text-zinc-600">₹</span>
+              <span className="absolute left-4 top-1/2 -translate-y-1/2 text-xl font-black" style={{ color: 'var(--text-muted)' }}>₹</span>
               <input
                 type="number"
                 value={investmentAmount || ''}
                 onChange={(e) => setInvestmentAmount(Number(e.target.value) || 0)}
                 onBlur={(e) => {
-                  // Set minimum value on blur if empty or too low
                   if (!e.target.value || Number(e.target.value) < 100) {
                     setInvestmentAmount(100);
                   }
                 }}
                 placeholder="Enter amount"
-                className="w-full bg-black border border-white/10 rounded-xl pl-10 pr-4 py-4 text-xl font-black focus:outline-none focus:border-orange-500 text-white placeholder:text-zinc-600"
+                className="w-full border rounded-xl pl-10 pr-4 py-4 text-xl font-black focus:outline-none"
+                style={{ 
+                  backgroundColor: 'var(--bg-page)', 
+                  borderColor: 'var(--border-default)',
+                  color: 'var(--text-primary)'
+                }}
               />
             </div>
           </div>
@@ -159,7 +163,7 @@ const YieldPage: React.FC<YieldProps> = ({ portfolio, balance, tick }) => {
                   
                   {/* Chart Area */}
                   <div className="ml-24">
-                    <div className="flex items-end gap-3 h-[280px] border-b border-l border-white/10 relative bg-black/20 rounded-lg p-4">
+                    <div className="flex items-end gap-3 h-[280px] border-b border-l border-white/10 relative bg-gray-50 rounded-lg p-4">
                       {/* Grid lines */}
                       <div className="absolute inset-4 flex flex-col justify-between pointer-events-none">
                         {[0, 1, 2].map((i) => (
@@ -167,8 +171,7 @@ const YieldPage: React.FC<YieldProps> = ({ portfolio, balance, tick }) => {
                         ))}
                       </div>
                       
-                      {/* Base line indicator */}
-                      <div className="absolute bottom-4 left-4 right-4 border-t-2 border-dashed border-zinc-700" />
+                      
                       
                       {/* Bars */}
                       {monthlyProjections.map((projection, i) => {
@@ -185,26 +188,26 @@ const YieldPage: React.FC<YieldProps> = ({ portfolio, balance, tick }) => {
                           >
                             {/* Tooltip */}
                             {hoveredMonth === i && (
-                              <div className="absolute bottom-full mb-4 left-1/2 -translate-x-1/2 bg-zinc-800 border border-white/10 rounded-xl p-4 z-20 min-w-[200px] shadow-2xl animate-in fade-in zoom-in-95 duration-200">
-                                <div className="text-[10px] font-black uppercase tracking-widest text-orange-500 mb-3">
+                              <div className="absolute bottom-full mb-4 left-1/2 -translate-x-1/2 border rounded-xl p-4 z-20 min-w-[200px] shadow-2xl animate-in fade-in zoom-in-95 duration-200" style={{ backgroundColor: 'var(--bg-card)', borderColor: 'var(--border-default)' }}>
+                                <div className="text-[10px] font-black uppercase tracking-widest mb-3" style={{ color: '#C7F70A' }}>
                                   Month {projection.month}
                                 </div>
                                 <div className="space-y-2 text-sm">
                                   <div className="flex justify-between gap-4">
-                                    <span className="text-zinc-500">Principal:</span>
-                                    <span className="text-white font-bold">₹{projection.principal.toLocaleString('en-IN')}</span>
+                                    <span style={{ color: 'var(--text-muted)' }}>Principal:</span>
+                                    <span className="font-bold" style={{ color: 'var(--text-primary)' }}>₹{projection.principal.toLocaleString('en-IN')}</span>
                                   </div>
                                   <div className="flex justify-between gap-4">
-                                    <span className="text-zinc-500">Yield Earned:</span>
-                                    <span className="text-green-500 font-bold">+₹{projection.yield.toFixed(2)}</span>
+                                    <span style={{ color: 'var(--text-muted)' }}>Yield Earned:</span>
+                                    <span className="font-bold" style={{ color: 'var(--state-success)' }}>+₹{projection.yield.toFixed(2)}</span>
                                   </div>
-                                  <div className="flex justify-between gap-4 border-t border-white/10 pt-2 mt-2">
-                                    <span className="text-zinc-500">Total Value:</span>
-                                    <span className="text-orange-500 font-black">₹{projection.total.toLocaleString('en-IN', { maximumFractionDigits: 2 })}</span>
+                                  <div className="flex justify-between gap-4 border-t pt-2 mt-2" style={{ borderColor: 'var(--border-default)' }}>
+                                    <span style={{ color: 'var(--text-muted)' }}>Total Value:</span>
+                                    <span className="font-black" style={{ color: '#000000ff' }}>₹{projection.total.toLocaleString('en-IN', { maximumFractionDigits: 2 })}</span>
                                   </div>
                                 </div>
                                 {/* Tooltip arrow */}
-                                <div className="absolute top-full left-1/2 -translate-x-1/2 border-8 border-transparent border-t-zinc-800" />
+                                <div className="absolute top-full left-1/2 -translate-x-1/2 border-8 border-transparent" style={{ borderTopColor: 'var(--bg-card)' }} />
                               </div>
                             )}
                             
@@ -212,20 +215,20 @@ const YieldPage: React.FC<YieldProps> = ({ portfolio, balance, tick }) => {
                             <div className="relative w-full h-full flex flex-col justify-end">
                               {/* Bar */}
                               <div 
-                                className={`w-full transition-all duration-500 ease-out rounded-t-lg relative ${
-                                  hoveredMonth === i 
-                                    ? 'bg-orange-400 shadow-lg shadow-orange-500/50' 
-                                    : 'bg-gradient-to-t from-orange-600 via-orange-500 to-orange-400'
-                                }`}
+                                className="w-full transition-all duration-500 ease-out rounded-t-lg relative"
                                 style={{ 
                                   height: `${barHeight}%`,
-                                  minHeight: '24px'
+                                  minHeight: '24px',
+                                  background: hoveredMonth === i 
+                                    ? '#B6E600'
+                                    : 'linear-gradient(to top, #9BC700, #B6E600, #C7F70A)',
+                                  boxShadow: hoveredMonth === i ? '0 10px 30px rgba(199, 247, 10, 0.3)' : 'none'
                                 }} 
                               >
                                 {/* Value label on top of bar */}
                                 <div className={`absolute -top-6 left-1/2 -translate-x-1/2 text-[9px] font-black whitespace-nowrap transition-opacity ${
-                                  hoveredMonth === i ? 'opacity-100 text-orange-500' : 'opacity-0'
-                                }`}>
+                                  hoveredMonth === i ? 'opacity-100' : 'opacity-0'
+                                }`} style={{ color: '#000000ff' }}>
                                   +₹{projection.yield.toFixed(0)}
                                 </div>
                               </div>
@@ -240,9 +243,8 @@ const YieldPage: React.FC<YieldProps> = ({ portfolio, balance, tick }) => {
                       {monthlyProjections.map((_, i) => (
                         <div 
                           key={i} 
-                          className={`flex-1 text-center text-[10px] font-black uppercase transition-colors ${
-                            hoveredMonth === i ? 'text-orange-500' : 'text-zinc-600'
-                          }`}
+                          className="flex-1 text-center text-[10px] font-black uppercase transition-colors"
+                          style={{ color: hoveredMonth === i ? '#C7F70A' : 'var(--text-muted)' }}
                         >
                           M{i + 1}
                         </div>
@@ -256,24 +258,24 @@ const YieldPage: React.FC<YieldProps> = ({ portfolio, balance, tick }) => {
 
           {/* Chart Summary */}
           <div className="mt-8 grid grid-cols-3 gap-4">
-            <div className="bg-black/30 rounded-2xl p-4 border border-white/5">
-              <div className="text-[10px] font-black uppercase tracking-widest text-zinc-500 mb-1">6-Month Yield</div>
-              <div className="text-xl font-black text-white">₹{monthlyProjections[5]?.yield.toFixed(2)}</div>
+            <div className="rounded-2xl p-4 border" style={{ backgroundColor: 'var(--bg-accent-soft)', borderColor: 'var(--border-default)' }}>
+              <div className="text-[10px] font-black uppercase tracking-widest mb-1" style={{ color: 'var(--text-muted)' }}>6-Month Yield</div>
+              <div className="text-xl font-black" style={{ color: 'var(--text-primary)' }}>₹{monthlyProjections[5]?.yield.toFixed(2)}</div>
             </div>
-            <div className="bg-black/30 rounded-2xl p-4 border border-white/5">
-              <div className="text-[10px] font-black uppercase tracking-widest text-zinc-500 mb-1">12-Month Yield</div>
-              <div className="text-xl font-black text-orange-500">₹{monthlyProjections[11]?.yield.toFixed(2)}</div>
+            <div className="rounded-2xl p-4 border" style={{ backgroundColor: 'var(--bg-accent-soft)', borderColor: 'var(--border-default)' }}>
+              <div className="text-[10px] font-black uppercase tracking-widest mb-1" style={{ color: 'var(--text-muted)' }}>12-Month Yield</div>
+              <div className="text-xl font-black" style={{ color: '#000000ff' }}>₹{monthlyProjections[11]?.yield.toFixed(2)}</div>
             </div>
-            <div className="bg-black/30 rounded-2xl p-4 border border-white/5">
-              <div className="text-[10px] font-black uppercase tracking-widest text-zinc-500 mb-1">Effective APY</div>
-              <div className="text-xl font-black text-white">{selectedApy}%</div>
+            <div className="rounded-2xl p-4 border" style={{ backgroundColor: 'var(--bg-accent-soft)', borderColor: 'var(--border-default)' }}>
+              <div className="text-[10px] font-black uppercase tracking-widest mb-1" style={{ color: 'var(--text-muted)' }}>Effective APY</div>
+              <div className="text-xl font-black" style={{ color: 'var(--text-primary)' }}>{selectedApy}%</div>
             </div>
           </div>
         </div>
 
         {/* Right Sidebar */}
         <div className="space-y-8">
-          <div className="bg-orange-500 p-12 rounded-[3rem] text-black shadow-2xl shadow-orange-500/20">
+          <div className="p-12 rounded-[3rem] shadow-2xl" style={{ backgroundColor: '#C7F70A', color: 'var(--text-primary)', boxShadow: '0 25px 50px rgba(199, 247, 10, 0.15)' }}>
             <h3 className="text-xs font-black uppercase tracking-[0.2em] mb-4 opacity-70">Est. Yearly Income</h3>
             <div className="text-5xl font-black tracking-tighter mb-2">
               ₹{(investmentAmount * selectedApy / 100).toLocaleString('en-IN', { maximumFractionDigits: 0 })}
@@ -284,31 +286,31 @@ const YieldPage: React.FC<YieldProps> = ({ portfolio, balance, tick }) => {
             <p className="text-xs font-bold uppercase tracking-widest leading-relaxed mt-6 opacity-60">Derived from sovereign fixed-rate coupons</p>
           </div>
           
-          <div className="bg-zinc-900/60 border border-white/10 p-10 rounded-[3rem]">
-            <h3 className="text-[10px] font-black uppercase tracking-widest mb-6 text-zinc-500">Live Payout Pool</h3>
+          <div className="border p-10 rounded-[3rem]" style={{ backgroundColor: 'var(--bg-card)', borderColor: 'var(--border-default)' }}>
+            <h3 className="text-[10px] font-black uppercase tracking-widest mb-6" style={{ color: 'var(--text-muted)' }}>Live Payout Pool</h3>
             <div className="flex justify-between items-center mb-8">
-              <span className="text-4xl font-black italic tracking-tighter">₹{stats.totalYield.toFixed(4)}</span>
-              <span className="text-[10px] font-bold uppercase bg-white/10 px-3 py-1 rounded-full text-white">ON-CHAIN</span>
+              <span className="text-4xl font-black italic tracking-tighter" style={{ color: 'var(--text-primary)' }}>₹{stats.totalYield.toFixed(4)}</span>
+              <span className="text-[10px] font-bold uppercase px-3 py-1 rounded-full" style={{ backgroundColor: 'var(--bg-accent-soft)', color: 'var(--text-primary)' }}>ON-CHAIN</span>
             </div>
-            <button className="w-full bg-white text-black py-5 rounded-full font-black uppercase tracking-widest text-xs hover:bg-orange-500 transition-all shadow-xl">Sweep to Wallet</button>
+            <button className="w-full py-5 rounded-full font-black uppercase tracking-widest text-xs transition-all shadow-xl" style={{ backgroundColor: 'var(--text-primary)', color: 'var(--bg-card)' }}>Sweep to Wallet</button>
           </div>
 
           {/* Portfolio Stats */}
           {portfolio.length > 0 && (
-            <div className="bg-zinc-900/40 border border-white/5 p-8 rounded-[2rem]">
-              <h3 className="text-[10px] font-black uppercase tracking-widest mb-6 text-zinc-500">Your Portfolio</h3>
+            <div className="border p-8 rounded-[2rem]" style={{ backgroundColor: 'var(--bg-card)', borderColor: 'var(--border-default)' }}>
+              <h3 className="text-[10px] font-black uppercase tracking-widest mb-6" style={{ color: 'var(--text-muted)' }}>Your Portfolio</h3>
               <div className="space-y-4">
                 <div className="flex justify-between">
-                  <span className="text-zinc-500 text-sm">Total Invested</span>
-                  <span className="text-white font-bold">₹{stats.totalInvested.toLocaleString('en-IN')}</span>
+                  <span className="text-sm" style={{ color: 'var(--text-muted)' }}>Total Invested</span>
+                  <span className="font-bold" style={{ color: 'var(--text-primary)' }}>₹{stats.totalInvested.toLocaleString('en-IN')}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-zinc-500 text-sm">Avg APY</span>
-                  <span className="text-orange-500 font-bold">{stats.avgApy.toFixed(2)}%</span>
+                  <span className="text-sm" style={{ color: 'var(--text-muted)' }}>Avg APY</span>
+                  <span className="font-bold" style={{ color: '#C7F70A' }}>{stats.avgApy.toFixed(2)}%</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-zinc-500 text-sm">Annual Yield</span>
-                  <span className="text-white font-bold">₹{stats.projectedAnnual.toFixed(2)}</span>
+                  <span className="text-sm" style={{ color: 'var(--text-muted)' }}>Annual Yield</span>
+                  <span className="font-bold" style={{ color: 'var(--text-primary)' }}>₹{stats.projectedAnnual.toFixed(2)}</span>
                 </div>
               </div>
             </div>
@@ -317,44 +319,44 @@ const YieldPage: React.FC<YieldProps> = ({ portfolio, balance, tick }) => {
       </div>
 
       {/* Breakdown Section */}
-      <section className="p-16 bg-zinc-900/40 rounded-[4rem] border border-white/5 mb-20">
-        <h3 className="text-xl font-black uppercase mb-12 italic underline decoration-orange-500 underline-offset-8">Breakdown</h3>
+      <section className="p-16 rounded-[4rem] border mb-20" style={{ backgroundColor: 'var(--bg-card)', borderColor: 'var(--border-default)' }}>
+        <h3 className="text-xl font-black uppercase mb-12 italic underline underline-offset-8" style={{ textDecorationColor: '#C7F70A', color: 'var(--text-primary)' }}>Breakdown</h3>
         <div className="grid md:grid-cols-4 gap-12">
           <div>
-            <span className="text-orange-500 font-black text-xs uppercase tracking-widest mb-3 block">Daily Accrual</span>
-            <div className="text-4xl font-black">₹{((investmentAmount * selectedApy / 100) / 365).toFixed(2)}</div>
-            <div className="text-zinc-600 text-xs mt-2">per day</div>
+            <span className="font-black text-xs uppercase tracking-widest mb-3 block" style={{ color: '#C7F70A' }}>Daily Accrual</span>
+            <div className="text-4xl font-black" style={{ color: 'var(--text-primary)' }}>₹{((investmentAmount * selectedApy / 100) / 365).toFixed(2)}</div>
+            <div className="text-xs mt-2" style={{ color: 'var(--text-muted)' }}>per day</div>
           </div>
           <div>
-            <span className="text-zinc-500 font-black text-xs uppercase tracking-widest mb-3 block">Weekly Accrual</span>
-            <div className="text-4xl font-black">₹{((investmentAmount * selectedApy / 100) / 52).toFixed(2)}</div>
-            <div className="text-zinc-600 text-xs mt-2">per week</div>
+            <span className="font-black text-xs uppercase tracking-widest mb-3 block" style={{ color: 'var(--text-muted)' }}>Weekly Accrual</span>
+            <div className="text-4xl font-black" style={{ color: 'var(--text-primary)' }}>₹{((investmentAmount * selectedApy / 100) / 52).toFixed(2)}</div>
+            <div className="text-xs mt-2" style={{ color: 'var(--text-muted)' }}>per week</div>
           </div>
           <div>
-            <span className="text-zinc-500 font-black text-xs uppercase tracking-widest mb-3 block">Monthly Accrual</span>
-            <div className="text-4xl font-black">₹{((investmentAmount * selectedApy / 100) / 12).toFixed(2)}</div>
-            <div className="text-zinc-600 text-xs mt-2">per month</div>
+            <span className="font-black text-xs uppercase tracking-widest mb-3 block" style={{ color: 'var(--text-muted)' }}>Monthly Accrual</span>
+            <div className="text-4xl font-black" style={{ color: 'var(--text-primary)' }}>₹{((investmentAmount * selectedApy / 100) / 12).toFixed(2)}</div>
+            <div className="text-xs mt-2" style={{ color: 'var(--text-muted)' }}>per month</div>
           </div>
           <div>
-            <span className="text-zinc-500 font-black text-xs uppercase tracking-widest mb-3 block">Yearly Total</span>
-            <div className="text-4xl font-black text-orange-500">₹{(investmentAmount * selectedApy / 100).toFixed(2)}</div>
-            <div className="text-zinc-600 text-xs mt-2">per year</div>
+            <span className="font-black text-xs uppercase tracking-widest mb-3 block" style={{ color: 'var(--text-muted)' }}>Yearly Total</span>
+            <div className="text-4xl font-black" style={{ color: '#C7F70A' }}>₹{(investmentAmount * selectedApy / 100).toFixed(2)}</div>
+            <div className="text-xs mt-2" style={{ color: 'var(--text-muted)' }}>per year</div>
           </div>
         </div>
       </section>
 
       {/* Comparison Table */}
-      <section className="bg-zinc-900/30 border border-white/5 rounded-[3rem] p-12">
-        <h3 className="text-xl font-black uppercase mb-8">Compare Bond Returns</h3>
+      <section className="border rounded-[3rem] p-12" style={{ backgroundColor: 'var(--bg-card)', borderColor: 'var(--border-default)' }}>
+        <h3 className="text-xl font-black uppercase mb-8" style={{ color: 'var(--text-primary)' }}>Compare Bond Returns</h3>
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead>
-              <tr className="border-b border-white/10">
-                <th className="text-left py-4 text-[10px] font-black uppercase tracking-widest text-zinc-500">Bond Type</th>
-                <th className="text-right py-4 text-[10px] font-black uppercase tracking-widest text-zinc-500">APY</th>
-                <th className="text-right py-4 text-[10px] font-black uppercase tracking-widest text-zinc-500">Monthly</th>
-                <th className="text-right py-4 text-[10px] font-black uppercase tracking-widest text-zinc-500">6 Months</th>
-                <th className="text-right py-4 text-[10px] font-black uppercase tracking-widest text-zinc-500">1 Year</th>
+              <tr className="border-b" style={{ borderColor: 'var(--border-default)' }}>
+                <th className="text-left py-4 text-[10px] font-black uppercase tracking-widest" style={{ color: 'var(--text-muted)' }}>Bond Type</th>
+                <th className="text-right py-4 text-[10px] font-black uppercase tracking-widest" style={{ color: 'var(--text-muted)' }}>APY</th>
+                <th className="text-right py-4 text-[10px] font-black uppercase tracking-widest" style={{ color: 'var(--text-muted)' }}>Monthly</th>
+                <th className="text-right py-4 text-[10px] font-black uppercase tracking-widest" style={{ color: 'var(--text-muted)' }}>6 Months</th>
+                <th className="text-right py-4 text-[10px] font-black uppercase tracking-widest" style={{ color: 'var(--text-muted)' }}>1 Year</th>
               </tr>
             </thead>
             <tbody>
@@ -362,21 +364,26 @@ const YieldPage: React.FC<YieldProps> = ({ portfolio, balance, tick }) => {
                 const monthly = (investmentAmount * option.apy / 100) / 12;
                 const sixMonth = monthly * 6;
                 const yearly = investmentAmount * option.apy / 100;
+                const isSelected = selectedApy === option.apy;
                 return (
                   <tr 
                     key={option.apy} 
-                    className={`border-b border-white/5 hover:bg-white/5 transition-colors cursor-pointer ${
-                      selectedApy === option.apy ? 'bg-orange-500/10' : ''
-                    }`}
+                    className="border-b transition-colors cursor-pointer"
+                    style={{ 
+                      borderColor: 'var(--border-default)',
+                      backgroundColor: isSelected ? 'rgba(199, 247, 10, 0.1)' : 'transparent'
+                    }}
                     onClick={() => setSelectedApy(option.apy)}
+                    onMouseEnter={(e) => !isSelected && (e.currentTarget.style.backgroundColor = 'var(--bg-accent-soft)')}
+                    onMouseLeave={(e) => !isSelected && (e.currentTarget.style.backgroundColor = 'transparent')}
                   >
-                    <td className="py-4 font-bold">{option.label}</td>
-                    <td className={`py-4 text-right font-black ${selectedApy === option.apy ? 'text-orange-500' : ''}`}>
+                    <td className="py-4 font-bold" style={{ color: 'var(--text-primary)' }}>{option.label}</td>
+                    <td className="py-4 text-right font-black" style={{ color: isSelected ? '#C7F70A' : 'var(--text-primary)' }}>
                       {option.apy}%
                     </td>
-                    <td className="py-4 text-right text-zinc-400">₹{monthly.toFixed(2)}</td>
-                    <td className="py-4 text-right text-zinc-400">₹{sixMonth.toFixed(2)}</td>
-                    <td className={`py-4 text-right font-bold ${selectedApy === option.apy ? 'text-orange-500' : 'text-white'}`}>
+                    <td className="py-4 text-right" style={{ color: 'var(--text-muted)' }}>₹{monthly.toFixed(2)}</td>
+                    <td className="py-4 text-right" style={{ color: 'var(--text-muted)' }}>₹{sixMonth.toFixed(2)}</td>
+                    <td className="py-4 text-right font-bold" style={{ color: isSelected ? '#C7F70A' : 'var(--text-primary)' }}>
                       ₹{yearly.toFixed(2)}
                     </td>
                   </tr>

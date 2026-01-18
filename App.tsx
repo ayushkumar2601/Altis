@@ -45,6 +45,14 @@ const INDIAN_BONDS: Bond[] = [
   { id: 'sdl-mh-2029', name: 'Maharashtra SDL 2029', apy: 7.45, maturityDate: '2029-06-20', pricePerUnit: 100, risk: 'State Sovereign', duration: '5 Years', totalSupply: 5000000, remainingSupply: 2100000 },
   { id: 'nhai-2034', name: 'NHAI Tax-Free 2034', apy: 6.80, maturityDate: '2034-03-10', pricePerUnit: 1000, risk: 'AAA (Govt Backed)', duration: '10 Years', totalSupply: 2000000, remainingSupply: 1500000 },
   { id: 'rbi-float', name: 'RBI Floating Rate Bond', apy: 8.05, maturityDate: '2031-12-01', pricePerUnit: 1000, risk: 'Sovereign', duration: '7 Years', totalSupply: 5000000, remainingSupply: 4800000 },
+  { id: 'in-gs-2028', name: 'India G-Sec 2028 (6.95%)', apy: 6.95, maturityDate: '2028-08-15', pricePerUnit: 100, risk: 'Sovereign', duration: '4 Years', totalSupply: 8000000, remainingSupply: 6200000 },
+  { id: 'sdl-ka-2032', name: 'Karnataka SDL 2032', apy: 7.60, maturityDate: '2032-03-25', pricePerUnit: 100, risk: 'State Sovereign', duration: '8 Years', totalSupply: 4000000, remainingSupply: 3100000 },
+  { id: 'irfc-2035', name: 'IRFC Tax-Free 2035', apy: 6.50, maturityDate: '2035-01-20', pricePerUnit: 500, risk: 'AAA (Govt Backed)', duration: '11 Years', totalSupply: 3000000, remainingSupply: 2400000 },
+  { id: 'in-tbill-2026', name: 'India T-Bill 2026 (6.25%)', apy: 6.25, maturityDate: '2026-12-10', pricePerUnit: 100, risk: 'Sovereign', duration: '2 Years', totalSupply: 15000000, remainingSupply: 12000000 },
+  { id: 'sdl-tn-2030', name: 'Tamil Nadu SDL 2030', apy: 7.35, maturityDate: '2030-09-15', pricePerUnit: 100, risk: 'State Sovereign', duration: '6 Years', totalSupply: 6000000, remainingSupply: 4800000 },
+  { id: 'pfc-2033', name: 'PFC Tax-Free 2033', apy: 6.70, maturityDate: '2033-07-30', pricePerUnit: 500, risk: 'AAA (Govt Backed)', duration: '9 Years', totalSupply: 2500000, remainingSupply: 1900000 },
+  { id: 'in-gs-2027', name: 'India G-Sec 2027 (6.80%)', apy: 6.80, maturityDate: '2027-05-20', pricePerUnit: 100, risk: 'Sovereign', duration: '3 Years', totalSupply: 12000000, remainingSupply: 9500000 },
+  { id: 'sdl-gj-2031', name: 'Gujarat SDL 2031', apy: 7.50, maturityDate: '2031-11-10', pricePerUnit: 100, risk: 'State Sovereign', duration: '7 Years', totalSupply: 5500000, remainingSupply: 4200000 },
 ];
 
 const SOL_TO_INR_DEMO_RATE = 12500;
@@ -248,7 +256,10 @@ const App: React.FC = () => {
     const bond = marketBonds.find(b => b.id === bondId);
     const { solana } = window as any;
     
+    console.log('[Minting] Starting bond purchase:', { bondId, inrAmount });
+    
     if (!bond || !pubkey || !solana?.isPhantom) {
+      console.error('[Minting] Missing requirements:', { bond: !!bond, pubkey: !!pubkey, phantom: !!solana?.isPhantom });
       alert("Please ensure your Phantom extension is connected.");
       return;
     }
@@ -279,11 +290,14 @@ const App: React.FC = () => {
         }
       };
       
+      console.log('[Weil Chain] Verification input:', JSON.stringify(verificationInput, null, 2));
+      
       const verificationResult = await verifyBondMinting(verificationInput);
       
       if (!verificationResult.success || !verificationResult.verified) {
         const errorMsg = verificationResult.errors?.join(', ') || 'Verification failed';
-        alert(`Weil Chain verification failed: ${errorMsg}`);
+        console.error('[Weil Chain] Verification failed:', errorMsg);
+        alert(`Bond minting verification failed:\n\n${errorMsg}\n\nPlease check the console for more details.`);
         setIsMinting(false);
         return;
       }
@@ -382,11 +396,17 @@ const App: React.FC = () => {
       });
     } catch (err: any) {
       console.error("[Transaction Error]:", err);
+      console.error("[Error Stack]:", err.stack);
+      
+      let errorMessage = "An unexpected error occurred during the transaction.";
+      
       if (err.code === 4001) {
-        alert("Transaction request was cancelled by the user.");
-      } else {
-        alert(err.message || "An error occurred during the transaction.");
+        errorMessage = "Transaction request was cancelled by the user.";
+      } else if (err.message) {
+        errorMessage = err.message;
       }
+      
+      alert(`Error: ${errorMessage}\n\nPlease check the browser console for more details.`);
     } finally {
       setIsMinting(false);
     }

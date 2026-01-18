@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Supabase Connection Test</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+    <h1>Supabase Connection Test</h1>
+    <button onclick="testConnection()">Test Connection</button>
+    <pre id="output"></pre>
+
+    <script>
+        const SUPABASE_URL = 'https://chzuzdinksazeswzrife.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNoenV6ZGlua3NhemVzd3pyaWZlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjgyODg2MDMsImV4cCI6MjA4Mzg2NDYwM30.XNIgum5kCIRc1z3akidlULi1rV2MpPY-N0SpUkioJAc';
+
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        async function testConnection() {
+            const output = document.getElementById('output');
+            output.textContent = 'Testing connection...\n';
+
+            try {
+                // Test 1: Check if client is created
+                output.textContent += '✓ Supabase client created\n';
+
+                // Test 2: Try to query holdings table
+                output.textContent += '\nTesting holdings table...\n';
+                const { data: holdings, error: holdingsError } = await supabase
+                    .from('holdings')
+                    .select('*')
+                    .limit(1);
+
+                if (holdingsError) {
+                    output.textContent += `✗ Holdings table error: ${holdingsError.message}\n`;
+                } else {
+                    output.textContent += `✓ Holdings table accessible (${holdings?.length || 0} records)\n`;
+                }
+
+                // Test 3: Try to query execution_receipts table
+                output.textContent += '\nTesting execution_receipts table...\n';
+                const { data: receipts, error: receiptsError } = await supabase
+                    .from('execution_receipts')
+                    .select('*')
+                    .limit(1);
+
+                if (receiptsError) {
+                    output.textContent += `✗ Execution receipts table error: ${receiptsError.message}\n`;
+                    output.textContent += `\nThis is likely the issue! The execution_receipts table may not exist.\n`;
+                    output.textContent += `\nPlease create the table in Supabase with the following SQL:\n\n`;
+                    output.textContent += `CREATE TABLE execution_receipts (
+    id BIGSERIAL PRIMARY KEY,
+    wallet_address TEXT NOT NULL,
+    bond_id TEXT NOT NULL,
+    bond_name TEXT NOT NULL,
+    units NUMERIC NOT NULL,
+    invested_amount NUMERIC NOT NULL,
+    rules_verified JSONB NOT NULL,
+    receipt_hash TEXT NOT NULL,
+    receipt_id TEXT NOT NULL UNIQUE,
+    execution_status TEXT NOT NULL,
+    verification_errors JSONB,
+    weil_chain_block TEXT NOT NULL,
+    weil_chain_network TEXT NOT NULL,
+    weil_chain_executor TEXT NOT NULL,
+    solana_tx_hash TEXT,
+    solana_tx_confirmed BOOLEAN DEFAULT FALSE,
+    created_at TIMESTAMPTZ DEFAULT NOW()
+);\n`;
+                } else {
+                    output.textContent += `✓ Execution receipts table accessible (${receipts?.length || 0} records)\n`;
+                }
+
+                output.textContent += '\n✓ All tests completed!\n';
+
+            } catch (err) {
+                output.textContent += `\n✗ Unexpected error: ${err.message}\n`;
+                console.error(err);
+            }
+        }
+    </script>
+</body>
+</html>

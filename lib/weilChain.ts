@@ -238,37 +238,47 @@ export async function saveExecutionReceipt(
     };
   }
 
-  const receiptData = {
-    wallet_address: input.wallet_address,
-    bond_id: input.bond_id,
-    bond_name: input.bond_name,
-    units: input.units,
-    invested_amount: input.invested_amount,
-    rules_verified: weilResponse.rules_verified,
-    receipt_hash: weilResponse.receipt_hash,
-    receipt_id: weilResponse.receipt_id,
-    execution_status: weilResponse.execution_status,
-    verification_errors: weilResponse.verification_errors,
-    weil_chain_block: weilResponse.weil_chain_reference.block,
-    weil_chain_network: weilResponse.weil_chain_reference.network,
-    weil_chain_executor: weilResponse.weil_chain_reference.executor,
-    solana_tx_hash: null,
-    solana_tx_confirmed: false
-  };
+  try {
+    const receiptData = {
+      wallet_address: input.wallet_address,
+      bond_id: input.bond_id,
+      bond_name: input.bond_name,
+      units: Number(input.units),
+      invested_amount: Number(input.invested_amount),
+      rules_verified: weilResponse.rules_verified,
+      receipt_hash: weilResponse.receipt_hash,
+      receipt_id: weilResponse.receipt_id,
+      execution_status: weilResponse.execution_status,
+      verification_errors: weilResponse.verification_errors || null,
+      weil_chain_block: weilResponse.weil_chain_reference.block,
+      weil_chain_network: weilResponse.weil_chain_reference.network,
+      weil_chain_executor: weilResponse.weil_chain_reference.executor,
+      solana_tx_hash: null,
+      solana_tx_confirmed: false
+    };
 
-  const { data, error } = await supabase
-    .from('execution_receipts')
-    .insert(receiptData)
-    .select()
-    .single();
+    console.log('[Supabase] Attempting to save receipt:', receiptData.receipt_id);
+    console.log('[Supabase] Receipt data:', JSON.stringify(receiptData, null, 2));
 
-  if (error) {
-    console.error('[Supabase] Failed to save receipt:', error);
-    return { success: false, receiptId: null, error: error.message };
+    const { data, error } = await supabase
+      .from('execution_receipts')
+      .insert(receiptData)
+      .select()
+      .single();
+
+    if (error) {
+      console.error('[Supabase] Failed to save receipt:', error);
+      console.error('[Supabase] Error details:', JSON.stringify(error, null, 2));
+      return { success: false, receiptId: null, error: error.message };
+    }
+
+    console.log('[Supabase] Receipt saved successfully:', data.receipt_id);
+    return { success: true, receiptId: data.receipt_id };
+  } catch (err: any) {
+    console.error('[Supabase] Exception while saving receipt:', err);
+    console.error('[Supabase] Exception stack:', err.stack);
+    return { success: false, receiptId: null, error: err.message || 'Unknown error' };
   }
-
-  console.log('[Supabase] Receipt saved:', data.receipt_id);
-  return { success: true, receiptId: data.receipt_id };
 }
 
 /**
@@ -359,27 +369,44 @@ export async function verifyBondMinting(
   
   console.log('[Weil Chain Workflow] Starting verification...');
   
-  // Step 1: Call Weil Chain verification service
-  const weilResponse = await callWeilChainVerification(input);
-  
-  // Step 2: Save receipt to database
-  const { success, receiptId, error } = await saveExecutionReceipt(input, weilResponse);
-  
-  if (!success) {
+  try {
+    // Step 1: Call Weil Chain verification service
+    const weilResponse = await callWeilChainVerification(input);
+    
+    console.log('[Weil Chain Workflow] Verification response:', {
+      status: weilResponse.execution_status,
+      receiptId: weilResponse.receipt_id,
+      verified: weilResponse.execution_status === 'VERIFIED'
+    });
+    
+    // Step 2: Save receipt to database
+    const { success, receiptId, error } = await saveExecutionReceipt(input, weilResponse);
+    
+    if (!success) {
+      console.error('[Weil Chain Workflow] Failed to save receipt:', error);
+      return {
+        success: false,
+        receiptId: null,
+        verified: false,
+        errors: [error || 'Failed to save receipt']
+      };
+    }
+    
+    console.log('[Weil Chain Workflow] Verification complete successfully');
+    
+    return {
+      success: true,
+      receiptId,
+      verified: weilResponse.execution_status === 'VERIFIED',
+      errors: weilResponse.verification_errors
+    };
+  } catch (err: any) {
+    console.error('[Weil Chain Workflow] Unexpected error:', err);
     return {
       success: false,
       receiptId: null,
       verified: false,
-      errors: [error || 'Failed to save receipt']
+      errors: [err.message || 'Unexpected error during verification']
     };
   }
-  
-  console.log('[Weil Chain Workflow] Verification complete');
-  
-  return {
-    success: true,
-    receiptId,
-    verified: weilResponse.execution_status === 'VERIFIED',
-    errors: weilResponse.verification_errors
-  };
 }

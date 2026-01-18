@@ -15,11 +15,9 @@ const Hero: React.FC<HeroProps> = ({ onConnect, isConnected }) => {
         {/* Left Side: Copy */}
         <div className="flex-1 text-left z-10 animate-slide-up">
           <h1 className="text-huge font-black uppercase mb-8">
-            <span className="accent-glow" style={{ color: 'var(--bg-accent-strong)' }}>ELEVATE YOUR</span> <br />
-            <span className="italic" style={{ color: 'var(--text-primary)' }}>PORTFOLIO.</span> <br />
-            <span style={{ color: 'var(--state-success)' }}>FROM JUST </span> 
-            <span style={{ color: 'var(--state-warning)', textShadow: '0 0 8px rgba(var(--color-10-rgb), 0.6), 0 0 16px rgba(var(--color-10-rgb), 0.4)' }}>₹100</span> 
-            <span style={{ color: 'var(--bg-accent-strong)' }}>.</span>
+            <span style={{ color: '#B6E600' }}>ELEVATE YOUR</span> <br />
+            <span className="italic" style={{ color: '#1A1A1A' }}>PORTFOLIO.</span> <br />
+            <span style={{ color: '#C7F70A' }}>FROM JUST </span> <span>₹100.</span>
           </h1>
           
           <p className="max-w-xl text-xl md:text-2xl font-medium leading-relaxed mb-10" style={{ color: 'var(--text-secondary)' }}>
@@ -35,9 +33,9 @@ const Hero: React.FC<HeroProps> = ({ onConnect, isConnected }) => {
               }}
               className="px-12 py-5 rounded-full font-black uppercase tracking-widest text-lg transition-all active:scale-95"
               style={{ 
-                backgroundColor: 'var(--bg-accent-strong)', 
-                color: 'var(--text-primary)',
-                boxShadow: '0 20px 40px rgba(var(--color-1-rgb), 0.2)'
+                backgroundColor: '#C7F70A', 
+                color: '#1A1A1A',
+                boxShadow: '0 20px 40px rgba(199, 247, 10, 0.3)'
               }}
             >
               {isConnected ? 'Market Ready' : 'Connect Extension'}
@@ -46,8 +44,8 @@ const Hero: React.FC<HeroProps> = ({ onConnect, isConnected }) => {
               className="px-10 py-5 rounded-full font-black uppercase tracking-widest text-lg transition-all active:scale-95 border-2"
               style={{ 
                 backgroundColor: 'transparent', 
-                borderColor: 'var(--border-default)', 
-                color: 'var(--text-primary)' 
+                borderColor: '#C7F70A', 
+                color: '#1A1A1A' 
               }}
             >
               Explore Bonds
