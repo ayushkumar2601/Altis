@@ -53,8 +53,8 @@ const Hero: React.FC<HeroProps> = ({ onConnect, isConnected }) => {
           </div>
         </div>
 
-        {/* Right Side: Interactive Card */}
-        <div className="flex-1 flex items-center justify-center -mt-28 lg:-mt-32 ml-5">
+        {/* Right Side: Interactive Card - Larger and Shifted Right */}
+        <div className="flex-1 flex items-center justify-end lg:justify-end scale-110 lg:scale-125 lg:translate-x-16">
           <BondCard enableTilt={true} />
         </div>
       </div>

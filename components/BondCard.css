@@ -10,12 +10,12 @@
   --background-x: 50%;
   --background-y: 50%;
   --card-radius: 32px;
-  --sunpillar-1: hsl(25, 100%, 50%);
-  --sunpillar-2: hsl(35, 100%, 55%);
-  --sunpillar-3: hsl(45, 100%, 60%);
-  --sunpillar-4: hsl(30, 100%, 50%);
-  --sunpillar-5: hsl(20, 100%, 45%);
-  --sunpillar-6: hsl(15, 100%, 40%);
+  --sunpillar-1: hsl(75, 95%, 55%);
+  --sunpillar-2: hsl(72, 94%, 50%);
+  --sunpillar-3: hsl(75, 100%, 80%);
+  --sunpillar-4: hsl(73, 92%, 52%);
+  --sunpillar-5: hsl(70, 90%, 48%);
+  --sunpillar-6: hsl(68, 88%, 45%);
   
   perspective: 800px;
   transform: translate3d(0, 0, 0.1px);
@@ -32,7 +32,7 @@
   pointer-events: none;
   background: radial-gradient(
     circle at var(--pointer-x) var(--pointer-y),
-    rgba(249, 115, 22, 0.6) 0%,
+    rgba(199, 247, 10, 0.6) 0%,
     transparent 60%
   );
   filter: blur(80px) saturate(1.2);
@@ -87,7 +87,7 @@
   position: absolute;
   display: grid;
   grid-template-areas: "stack";
-  background: linear-gradient(145deg, rgba(249, 115, 22, 0.15) 0%, rgba(0, 0, 0, 0.9) 100%);
+  background: linear-gradient(145deg, rgba(199, 247, 10, 0.15) 0%, rgba(0, 0, 0, 0.9) 100%);
 }
 
 .bond-inside > * {
@@ -116,9 +116,9 @@
     repeating-linear-gradient(
       -45deg,
       #1a1a1a 0%,
-      hsl(25, 80%, 50%) 3.8%,
-      hsl(35, 90%, 55%) 4.5%,
-      hsl(25, 80%, 50%) 5.2%,
+      hsl(72, 94%, 50%) 3.8%,
+      hsl(75, 100%, 80%) 4.5%,
+      hsl(72, 94%, 50%) 5.2%,
       #1a1a1a 10%,
       #1a1a1a 12%
     ),
@@ -149,8 +149,8 @@
   overflow: hidden;
   background-image: radial-gradient(
     farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    hsla(25, 100%, 70%, 0.3) 12%,
-    hsla(25, 60%, 20%, 0.5) 90%
+    hsla(72, 94%, 70%, 0.3) 12%,
+    hsla(70, 60%, 20%, 0.5) 90%
   );
   mix-blend-mode: overlay;
   filter: brightness(0.9) contrast(1.1);
@@ -210,14 +210,15 @@
 
 .bond-badge {
   align-self: flex-start;
-  background: rgba(249, 115, 22, 0.9);
-  color: black;
+  background: rgba(199, 247, 10, 0.95);
+  color: #1A1A1A;
   font-size: 14px;
   font-weight: 800;
   letter-spacing: 0.15em;
   padding: 12px 24px;
   border-radius: 50px;
   text-transform: uppercase;
+  box-shadow: 0 4px 20px rgba(199, 247, 10, 0.3);
 }
 
 .bond-yield {
@@ -231,9 +232,9 @@
 .yield-value {
   font-size: 100px;
   font-weight: 900;
-  color: #f97316;
+  color: #C7F70A;
   line-height: 1;
-  text-shadow: 0 0 60px rgba(249, 115, 22, 0.5);
+  text-shadow: 0 0 60px rgba(199, 247, 10, 0.5);
 }
 
 .yield-label {
